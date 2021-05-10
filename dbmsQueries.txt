@@ -1,0 +1,43 @@
+1. select movie_name, avg(rate) from rating group by movie_name having avg(rate)>8;
+
+2. select city, count(*) from shows group by city having count(distinct theatre) > 2;
+
+3. select actor_movies.movie_name from actor_movies, actor_awards where actor_awards.actor_name = actor_movies.actor_name and actor_awards.actor_name = (select actor_name from actor_awards where award = "IIFA 2014 Best Actress");
+
+4.
+(list genre if any movie has avg rating >9)
+ select distinct genre from movie, rating where movie.name = rating.movie_name and exists (select rate from rating group by movie_name having avg(rate) > 9.0);
+
+5.
+(list if no one received the award)
+ select actor_name, award from actor_awards where not exists (select award from actor_awards where award = "Best Actor 2015");
+
+6. 
+(users who can watch a movie)
+select distinct username from user, shows where user.city = shows.city and user.city = (select city from shows where movie_name = "Missing man");
+
+7. create view movies as select name, year from movie;
+
+8. create view movieGenre as select name, genre from movie where status = "Now playing";
+
+9. 
+delimiter $$
+create procedure display 
+ -> begin $$ select * from actor where gender = "Male";
+ -> end $$
+delimiter $$
+
+10. 
+delimiter $$
+create procedure display 
+ -> begin $$ update rating set rate = 8.8 where movie_name = "PK";
+ -> end $$
+delimiter $$
+
+11. select movie_name from shows union select movie_name from rating;
+
+12. select name from movie where year like "20%";
+
+13. select name from movie where year between 1900 and 2010;
+
+14. select distinct actor_name from actor_movies where movie_name like "The%";
